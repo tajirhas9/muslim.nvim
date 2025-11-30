@@ -34,24 +34,17 @@ end
 
 -- FORMATTER: compute time left
 local function time_left(next_time)
-    local now = os.date("*t")
-    local target = os.date("*t")
-
     local h, m = next_time:match("(%d+):(%d+)")
     if not h or not m then return nil end
 
-    target.hour = tonumber(h)
-    target.min = tonumber(m)
-    target.sec = 0
-
-    local now_sec = os.time(now)
+    local target = os.date('*t')
+    target.hour = h
+    target.min = m
+    local now_sec = os.time()
     local target_sec = os.time(target)
 
-    if target_sec < now_sec then
-        target_sec = target_sec + 24 * 3600
-    end
+    local diff = os.difftime(target_sec, now_sec)
 
-    local diff = target_sec - now_sec
     local diff_min = math.floor(diff / 60)
     local diff_hr = math.floor(diff_min / 60)
     diff_min = diff_min % 60
@@ -64,7 +57,7 @@ local function compute_next(t)
     local order = { "Fajr", "Dhuhr", "Asr", "Maghrib", "Isha" }
     for _, p in ipairs(order) do
         local hr, min = time_left(t[p])
-        if hr then
+        if hr >= 0 and min > 0 then
             return p, hr, min
         end
     end
