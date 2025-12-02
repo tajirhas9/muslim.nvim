@@ -115,7 +115,7 @@ M.get_warning_level = function(waqt_info, utc_offset)
     local cur_end_h = math.floor(waqt_info.time_left / HOUR)
     local cur_end_m = math.floor((waqt_info.time_left % HOUR) / MINUTE)
 
-    print(waqt_info.time_left, cur_end_h, cur_end_m)
+    -- print(waqt_info.time_left, cur_end_h, cur_end_m)
 
     if cur_end_h >= 1 then
         return { fg = colors.green }
