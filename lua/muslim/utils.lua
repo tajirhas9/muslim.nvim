@@ -99,7 +99,7 @@ M.format = function(waqt_info, utc_offset, time_format, countdown_only)
 		local cur_end_h = M.to_fixed(math.floor(waqt_info.time_left / HOUR), 0)
 		local cur_end_m = M.to_fixed(math.floor((waqt_info.time_left % HOUR) / MINUTE), 0)
 		if countdown_only then
-			return string.format('%s in %dh %dm', get_waqt_label(next_waqt), cur_end_h, cur_end_m)
+			return string.format('%s in %dh %dm', get_waqt_label(cur_waqt), cur_end_h, cur_end_m)
 		else
 			if next_waqt then
 				return string.format('%s ends in %s:%s | %s at: %s', get_waqt_label(cur_waqt), cur_end_h, cur_end_m,
