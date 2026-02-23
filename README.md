@@ -75,16 +75,18 @@ muslim.setup({
 ### `:PrayerTimes` sample return value
 
 ```lua
-{
-  asr = "04:15 PM",
-  dhuhr = "12:06 PM",
-  fajr = "05:06 AM",
-  isha = "07:03 PM",
-  maghrib = "05:53 PM",
-  midnight = "12:06 AM",
-  sunrise = "06:21 AM",
-  sunset = "05:52 PM"
-}
+|-------------------------|
+| Waqt       | Time       |
+|-------------------------|
+| fajr       | 05:05 AM   |
+| sunrise    | 06:20 AM   |
+| dhuhr      | 12:06 PM   |
+| asr        | 04:15 PM   |
+| sunset     | 05:53 PM   |
+| maghrib    | 05:53 PM   |
+| isha       | 07:03 PM   |
+| midnight   | 12:06 AM   |
+|-------------------------|
 ```
 
 ## 🧰 Utility functions
