@@ -30,7 +30,7 @@ Install the plugin with your preferred package manager
     dependencies = {
         "nvim-lua/plenary.nvim",
         -- OPTIONAL
-        "nvim-lualine/lualine"
+        "nvim-lualine/lualine.nvim"
     }
 }
 ```
