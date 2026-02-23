@@ -90,11 +90,11 @@ local get_waqt_label = function(waqt)
 	return labels[waqt]
 end
 
-M.format = function(waqt_info, utc_offset, countdown_only)
+M.format = function(waqt_info, utc_offset, time_format, countdown_only)
 	utc_offset = utc_offset or 0
 	local cur_waqt = waqt_info.waqt_name
 	local next_waqt = waqt_info.next_waqt_name
-	local next_start = M.format_time(waqt_info.next_waqt_start, utc_offset * 60)
+	local next_start = M.format_time(waqt_info.next_waqt_start, utc_offset * 60, time_format)
 	if cur_waqt then
 		local cur_end_h = M.to_fixed(math.floor(waqt_info.time_left / HOUR), 0)
 		local cur_end_m = M.to_fixed(math.floor((waqt_info.time_left % HOUR) / MINUTE), 0)

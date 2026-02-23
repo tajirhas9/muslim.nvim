@@ -1,11 +1,12 @@
 local M = {
 	config = {
-		refresh        = 1,
-		latitude       = nil,
-		longitude      = nil,
-		utc_offset     = 0,
-		school         = 'hanafi',
-		method         = 'MWL',
+		refresh         = 1,
+		latitude        = nil,
+		longitude       = nil,
+		utc_offset      = 0,
+		school          = 'hanafi',
+		method          = 'MWL',
+        time_format = '12H',  -- '12H' for 12-hour with AM/PM, '24h' for 24-hour
 		countdown_only = false,
 		-- api_url    = "https://api.aladhan.com/v1/timings"
 	},
@@ -68,7 +69,7 @@ M.update = function()
 
 	local current_waqt = M.prayer_module.get_current_waqt()
 
-	M.prayer_time_text = format(current_waqt, M.config.utc_offset, M.config.countdown_only)
+	M.prayer_time_text = format(current_waqt, M.config.utc_offset, M.config.time_format, M.config.countdown_only)
 
 	-- update lualine if available
 	vim.schedule(function()
@@ -112,22 +113,22 @@ M.update_lualine = function(current_waqt)
 end
 
 vim.api.nvim_create_user_command("PrayerTimes", function()
-	local waqt_order = { "fajr", "sunrise", "dhuhr", "asr", "sunset", "maghrib", "isha", "midnight" }
-	local times = M.prayer_module.get_times()
-	local formatted = {}
-	for k, v in pairs(times) do
-		formatted[k] = require("muslim.utils").format_time(v, M.config.utc_offset * 60, "12H")
-	end
-	-- vim.print(formatted)
-	print("|" .. string.rep("-", 25) .. "|")
-	print(string.format("| %-10s | %-10s |", 'Waqt', 'Time'))
-	print("|" .. string.rep("-", 25) .. "|")
-	for _, k in ipairs(waqt_order) do
-		local v = formatted[k]
-		print(string.format("| %-10s | %-10s |", k, v))
-	end
-	print("|" .. string.rep("-", 25) .. "|")
-	return formatted
+    local waqt_order = { "fajr", "sunrise", "dhuhr", "asr", "sunset", "maghrib", "isha", "midnight" }
+    local times = M.prayer_module.get_times()
+    local formatted = {}
+    for k, v in pairs(times) do
+        formatted[k] = require("muslim.utils").format_time(v, M.config.utc_offset * 60, M.config.time_format)
+    end
+    -- vim.print(formatted)
+    print("|" .. string.rep("-", 25) .. "|")
+    print(string.format("| %-10s | %-10s |", 'Waqt', 'Time'))
+    print("|" .. string.rep("-", 25) .. "|")
+    for _, k in ipairs(waqt_order) do
+        local v = formatted[k]
+        print(string.format("| %-10s | %-10s |", k, v))
+    end
+    print("|" .. string.rep("-", 25) .. "|")
+    return formatted
 end, {})
 
 return M
