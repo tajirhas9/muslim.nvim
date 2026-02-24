@@ -41,14 +41,14 @@ Install the plugin with your preferred package manager
 
 ```lua
 {
-    refresh     = 1,         -- Refresh interval in minutes to update prayer waqt times
-    latitude    = nil,       -- MANDATORY TO BE PROVIDED. Geolocation latitude of the place of calculation
-    longitude   = nil,       -- MANDATORY TO BE PROVIDED. Geolocation longitude of the place of calculation
-    utc_offset  = 0,         -- timezone, default is GMT+0
-    school      = 'hanafi',  -- school of thought
-    method      = 'MWL',     -- calculation method. default is Muslim World League
-    time_format = '12H',     -- time display format: '12H' for 12-hour with AM/PM, '24h' for 24-hour
-    countdown_only = false, -- only show countdown to next prayer
+    refresh         = 1,         -- Refresh interval in minutes to update prayer waqt times
+    latitude        = nil,       -- MANDATORY TO BE PROVIDED. Geolocation latitude of the place of calculation
+    longitude       = nil,       -- MANDATORY TO BE PROVIDED. Geolocation longitude of the place of calculation
+    utc_offset      = 0,         -- timezone, default is GMT+0
+    school          = 'hanafi',  -- school of thought
+    method          = 'MWL',     -- calculation method. default is Muslim World League
+    time_format     = '12H',     -- time display format: '12H' for 12-hour with AM/PM, '24h' for 24-hour
+    countdown_only  = false,  -- only show countdown to next prayer
 }
 ```
 ## 🛠️ Setup
