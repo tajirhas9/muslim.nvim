@@ -47,6 +47,7 @@ Install the plugin with your preferred package manager
     utc_offset = 0,         -- timezone, default is GMT+0
     school     = 'hanafi',  -- school of thought
     method     = 'MWL',     -- calculation method. default is Muslim World League
+    countdown_only = false, -- only show countdown to next prayer
 }
 ```
 ## 🛠️ Setup
