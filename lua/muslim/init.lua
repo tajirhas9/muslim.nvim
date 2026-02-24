@@ -6,7 +6,7 @@ local M = {
 		utc_offset      = 0,
 		school          = 'hanafi',
 		method          = 'MWL',
-        time_format = '12H',  -- '12H' for 12-hour with AM/PM, '24h' for 24-hour
+    time_format = '12H',  -- '12H' for 12-hour with AM/PM, '24h' for 24-hour
 		countdown_only = false,
 		-- api_url    = "https://api.aladhan.com/v1/timings"
 	},
