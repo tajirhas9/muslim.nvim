@@ -48,6 +48,7 @@ Install the plugin with your preferred package manager
     school      = 'hanafi',  -- school of thought
     method      = 'MWL',     -- calculation method. default is Muslim World League
     time_format = '12H',     -- time display format: '12H' for 12-hour with AM/PM, '24h' for 24-hour
+    countdown_only = false,  -- show only countdown to next prayer
 }
 ```
 ## 🛠️ Setup
