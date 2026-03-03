@@ -12,6 +12,7 @@ A plugin to get prayer times and useful islamic essentials inside neovim
 - supports hanafi school of thought adjustments
 - supported methods: MWL, ISNA, Egypt, Makkah, Karachi, Tehran, Jafari, France, Russia, Singapore.
 - supports higher latitude adjustment
+- per-prayer minute offsets to fine-tune calculated times
 - lualine integration to display current waqt status
 
 ## 📦 Requriements
@@ -41,14 +42,24 @@ Install the plugin with your preferred package manager
 
 ```lua
 {
-    refresh     = 1,         -- Refresh interval in minutes to update prayer waqt times
-    latitude    = nil,       -- MANDATORY TO BE PROVIDED. Geolocation latitude of the place of calculation
-    longitude   = nil,       -- MANDATORY TO BE PROVIDED. Geolocation longitude of the place of calculation
-    utc_offset  = 0,         -- timezone, default is GMT+0
-    school      = 'hanafi',  -- school of thought
-    method      = 'MWL',     -- calculation method. default is Muslim World League
-    time_format = '12H',     -- time display format: '12H' for 12-hour with AM/PM, '24h' for 24-hour
-    countdown_only = false,  -- show only countdown to next prayer
+    refresh        = 1,        -- Refresh interval in minutes to update prayer waqt times
+    latitude       = nil,      -- MANDATORY TO BE PROVIDED. Geolocation latitude of the place of calculation
+    longitude      = nil,      -- MANDATORY TO BE PROVIDED. Geolocation longitude of the place of calculation
+    utc_offset     = 0,        -- timezone, default is GMT+0
+    school         = 'hanafi', -- school of thought
+    method         = 'MWL',    -- calculation method. default is Muslim World League
+    time_format    = '12H',    -- time display format: '12H' for 12-hour with AM/PM, '24h' for 24-hour
+    countdown_only = false,    -- show only countdown to next prayer
+    offset         = {         -- per-prayer minute offsets to fine-tune calculated times
+        fajr     = 0,          -- negative values subtract, positive values add minutes
+        sunrise  = 0,
+        dhuhr    = 0,
+        asr      = 0,
+        sunset   = 0,
+        maghrib  = 0,
+        isha     = 0,
+        midnight = 0,
+    },
 }
 ```
 ## 🛠️ Setup

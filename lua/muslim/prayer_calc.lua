@@ -19,7 +19,7 @@ local M = {
         dhuhr = "0 min",
         asr = "standard",
         high_lats = "night_middle",
-        tune = {},
+        offset = {},
         format = "24h",
         rounding = "nearest",
         utc_offset = 0,                  -- minutes or 'auto'
@@ -176,8 +176,8 @@ local update_times = function(times)
     return times
 end
 
-local tune_times = function(times)
-    local mins = M.config.tune or {}
+local adjust_time_offsets = function(times)
+    local mins = M.config.offset or {}
 
     for k, v in pairs(times) do
         if mins[k] then
@@ -233,7 +233,7 @@ local compute_times = function()
     end
     times = adjust_high_lats(times)
     times = update_times(times)
-    times = tune_times(times)
+    times = adjust_time_offsets(times)
     times = convert_times(times)
     return times
 end

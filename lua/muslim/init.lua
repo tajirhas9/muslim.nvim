@@ -8,6 +8,16 @@ local M = {
 		method         = 'MWL',
 		time_format    = '12H', -- '12H' for 12-hour with AM/PM, '24h' for 24-hour
 		countdown_only = false,
+		offset         = {      -- per-prayer minute offsets (e.g. fajr = -5 subtracts 5 min, isha = 3 adds 3 min)
+			fajr     = 0,
+			sunrise  = 0,
+			dhuhr    = 0,
+			asr      = 0,
+			sunset   = 0,
+			maghrib  = 0,
+			isha     = 0,
+			midnight = 0,
+		},
 		-- api_url    = "https://api.aladhan.com/v1/timings"
 	},
 	prayer_time_text = 'Please wait...',
@@ -46,7 +56,8 @@ M.setup = function(opts)
 		},
 		utc_offset = M.config.utc_offset,
 		asr = M.config.school,
-		method = M.config.method
+		method = M.config.method,
+		offset = M.config.offset,
 	})
 
 	-- First run
