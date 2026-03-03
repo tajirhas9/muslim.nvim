@@ -162,6 +162,87 @@ describe("muslim.prayer_calc", function()
     end)
   end)
 
+  describe("offset config", function()
+    it("positive offset delays prayer time", function()
+      local M_base = fresh_module()
+      M_base.setup({ location = { lat = 21.4225, lng = 39.8262 }, utc_offset = 3, method = "MWL" })
+      M_base.utc_time = MECCA_MARCH_3_2026
+      local fajr_base = M_base.get_times().fajr
+
+      local M_off = fresh_module()
+      M_off.setup({ location = { lat = 21.4225, lng = 39.8262 }, utc_offset = 3, method = "MWL", offset = { fajr = 10 } })
+      M_off.utc_time = MECCA_MARCH_3_2026
+      local fajr_off = M_off.get_times().fajr
+
+      assert.are.equal(fajr_base + 10 * 60000, fajr_off)
+    end)
+
+    it("negative offset advances prayer time", function()
+      local M_base = fresh_module()
+      M_base.setup({ location = { lat = 21.4225, lng = 39.8262 }, utc_offset = 3, method = "MWL" })
+      M_base.utc_time = MECCA_MARCH_3_2026
+      local isha_base = M_base.get_times().isha
+
+      local M_off = fresh_module()
+      M_off.setup({ location = { lat = 21.4225, lng = 39.8262 }, utc_offset = 3, method = "MWL", offset = { isha = -5 } })
+      M_off.utc_time = MECCA_MARCH_3_2026
+      local isha_off = M_off.get_times().isha
+
+      assert.are.equal(isha_base - 5 * 60000, isha_off)
+    end)
+
+    it("zero offset leaves prayer time unchanged", function()
+      local M_base = fresh_module()
+      M_base.setup({ location = { lat = 21.4225, lng = 39.8262 }, utc_offset = 3, method = "MWL" })
+      M_base.utc_time = MECCA_MARCH_3_2026
+      local dhuhr_base = M_base.get_times().dhuhr
+
+      local M_off = fresh_module()
+      M_off.setup({ location = { lat = 21.4225, lng = 39.8262 }, utc_offset = 3, method = "MWL", offset = { dhuhr = 0 } })
+      M_off.utc_time = MECCA_MARCH_3_2026
+      local dhuhr_off = M_off.get_times().dhuhr
+
+      assert.are.equal(dhuhr_base, dhuhr_off)
+    end)
+
+    it("offset for one waqt does not affect other waqts", function()
+      local all_waqts = { "fajr", "sunrise", "dhuhr", "asr", "sunset", "maghrib", "isha", "midnight" }
+
+      local M_base = fresh_module()
+      M_base.setup({ location = { lat = 21.4225, lng = 39.8262 }, utc_offset = 3, method = "MWL" })
+      M_base.utc_time = MECCA_MARCH_3_2026
+      local t_base = M_base.get_times()
+
+      local M_off = fresh_module()
+      M_off.setup({ location = { lat = 21.4225, lng = 39.8262 }, utc_offset = 3, method = "MWL", offset = { asr = 7 } })
+      M_off.utc_time = MECCA_MARCH_3_2026
+      local t_off = M_off.get_times()
+
+      assert.are.equal(t_base.asr + 7 * 60000, t_off.asr)
+      for _, k in ipairs(all_waqts) do
+        if k ~= "asr" then
+          assert.are.equal(t_base[k], t_off[k])
+        end
+      end
+    end)
+
+    it("empty offset table leaves all times unchanged", function()
+      local M_base = fresh_module()
+      M_base.setup({ location = { lat = 21.4225, lng = 39.8262 }, utc_offset = 3, method = "MWL" })
+      M_base.utc_time = MECCA_MARCH_3_2026
+      local t_base = M_base.get_times()
+
+      local M_off = fresh_module()
+      M_off.setup({ location = { lat = 21.4225, lng = 39.8262 }, utc_offset = 3, method = "MWL", offset = {} })
+      M_off.utc_time = MECCA_MARCH_3_2026
+      local t_off = M_off.get_times()
+
+      for _, k in ipairs({ "fajr", "sunrise", "dhuhr", "asr", "sunset", "maghrib", "isha", "midnight" }) do
+        assert.are.equal(t_base[k], t_off[k])
+      end
+    end)
+  end)
+
   describe("get_current_waqt structure", function()
     local M, info
 
